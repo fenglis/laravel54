@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
-use Carbon\Carbon;
+use App\Comment;
+use App\Zan;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(6);
+        $posts = Post::orderBy('created_at', 'desc')->withCount(['comments','zans'])->paginate(6);
         return view('post/index', compact('posts'));
     }
 
     public function show(Post $post)
     {
+        //预加载数据库,避免模板的数据库查询
+        $post->load('comments');
         return view('post/show', compact('post'));
     }
 
@@ -83,5 +86,42 @@ class PostController extends Controller
         $path = $request->file('wangEditorH5File')->storePublicly(md5(time()));
         //到该文件下,找此文件
         return asset('storage/' . $path);
+    }
+
+    //评论提交
+    public function comment(Post $post)
+    {
+        //验证
+        $this->validate( request(), [
+            'content' => 'required|min:3',
+        ]);
+
+        //逻辑  模型已经关联
+        $comment = new Comment();
+        $comment->user_id = \Auth::id();
+        $comment->content = request('content');
+        $post->comments()->save($comment);
+        //渲染
+        return back();
+    }
+
+    //赞
+    public function zan(Post $post)
+    {
+        $param = [
+            'user_id' => \Auth::id(),
+            'post_id' => $post->id,
+        ];
+
+        Zan::firstOrCreate($param);
+
+        return back();
+    }
+
+    //取消赞
+    public function unzan(Post $post)
+    {
+        $post->zan(\Auth::id())->delete();
+        return back();
     }
 }
