@@ -25,9 +25,9 @@ Route::post('/login', '\App\Http\Controllers\LoginController@login');
 //登出行为
 Route::get('/logout', '\App\Http\Controllers\LoginController@logout');
 //个人设置
-Route::get('/user/me/setting', '\App\Http\Controllers\UserController@setting');
+Route::get('/user/{user}/setting', '\App\Http\Controllers\UserController@setting');
 //个人设置操作
-Route::post('/user/me/setting', '\App\Http\Controllers\UserController@settingStore');
+Route::post('/user/{user}/settingStore', '\App\Http\Controllers\UserController@settingStore');
 
 
 
