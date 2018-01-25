@@ -2,6 +2,7 @@
 namespace App;
 
 use App\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
@@ -32,5 +33,21 @@ class Post extends Model
         return $this->hasMany(\App\Zan::class);
     }
 
+    //属于某个作者的文章
+    public function scopeAuthorBy(Builder $query, $user_id)
+    {
+        return $query->where('user_id', $user_id);
+    }
 
+    public function postTopics()
+    {
+        return $this->hasMany(\App\PostTopic::class, 'post_id');
+    }
+
+    public function scopeTopicNotBy(Builder $query, $topic_id)
+    {
+        return $query->doesntHave('postTopics', 'and', function($q) use ($topic_id) {
+            $q->where("topic_id", $topic_id);
+        });
+    }
 }

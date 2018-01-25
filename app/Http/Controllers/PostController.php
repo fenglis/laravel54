@@ -7,6 +7,7 @@ use App\Post;
 use App\Comment;
 use App\Zan;
 
+
 class PostController extends Controller
 {
     public function index()

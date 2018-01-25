@@ -18,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         //时间
         \Carbon\Carbon::setLocale('zh');
+
+        \View::composer('layout.sidebar', function($view){
+            $topics = \App\Topic::all();
+            $view->with('topics', $topics);
+        });
+
+
     }
 
     /**

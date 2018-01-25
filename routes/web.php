@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', '\App\Http\Controllers\PostController@index');
+Route::get('/', '\App\Http\Controllers\PostController@login');
 
 //用户模块
 //注册页面
@@ -55,8 +55,16 @@ Route::get('/posts/{post}/zan', '\App\Http\Controllers\PostController@zan');
 //取消赞
 Route::get('/posts/{post}/unzan', '\App\Http\Controllers\PostController@unzan');
 
-
 //个人中心
 Route::get('/user/{user}', '\App\Http\Controllers\UserController@show');
 Route::post('/user/{user}/fan', '\App\Http\Controllers\UserController@fan');
 Route::post('/user/{user}/unfan', '\App\Http\Controllers\UserController@unfan');
+
+//专题详情页
+Route::get('/topic/{topic}', '\App\Http\Controllers\TopicController@show');
+//投稿
+Route::post('/topic/{topic}/submit', '\App\Http\Controllers\TopicController@submit');
+
+
+//后台管理路由器
+include_once('admin.php');
