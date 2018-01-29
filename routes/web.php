@@ -13,25 +13,10 @@
 
 Route::get('/', '\App\Http\Controllers\PostController@login');
 
-//用户模块
-//注册页面
-Route::get('/register', '\App\Http\Controllers\RegisterController@index');
-//注册行为
-Route::post('/register', '\App\Http\Controllers\RegisterController@register');
-//登陆页面
-Route::get('/login', '\App\Http\Controllers\LoginController@index');
-//登录行为
-Route::post('/login', '\App\Http\Controllers\LoginController@login');
-//登出行为
-Route::get('/logout', '\App\Http\Controllers\LoginController@logout');
 //个人设置
 Route::get('/user/{user}/setting', '\App\Http\Controllers\UserController@setting');
 //个人设置操作
 Route::post('/user/{user}/settingStore', '\App\Http\Controllers\UserController@settingStore');
-
-
-
-
 
 //文章模块
 //文章列表
@@ -64,6 +49,20 @@ Route::post('/user/{user}/unfan', '\App\Http\Controllers\UserController@unfan');
 Route::get('/topic/{topic}', '\App\Http\Controllers\TopicController@show');
 //投稿
 Route::post('/topic/{topic}/submit', '\App\Http\Controllers\TopicController@submit');
+
+
+//用户模块
+//注册页面
+Route::get('/register', '\App\Http\Controllers\RegisterController@index');
+//注册行为
+Route::post('/register', '\App\Http\Controllers\RegisterController@register');
+//登陆页面
+Route::get('/login', '\App\Http\Controllers\LoginController@index')->name('login');
+//登录行为
+Route::post('/login', '\App\Http\Controllers\LoginController@login');
+//登出行为
+Route::get('/logout', '\App\Http\Controllers\LoginController@logout');
+
 
 
 //后台管理路由器
