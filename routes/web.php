@@ -64,6 +64,7 @@ Route::post('/login', '\App\Http\Controllers\LoginController@login');
 Route::get('/logout', '\App\Http\Controllers\LoginController@logout');
 
 
+Route::get('/notices', '\App\Http\Controllers\NoticeController@index');
 
 //后台管理路由器
 include_once('admin.php');

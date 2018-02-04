@@ -26,6 +26,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        //权限管理
+        $permissions = \App\AdminPermission::all();
+        foreach ($permissions as $permission)
+        {
+            //use 匿名函数传递参数方法
+            Gate::define($permission->name, function($user) use($permission){
+                return $user->hasPermission($permission);
+            });
+        }
     }
 }

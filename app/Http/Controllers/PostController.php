@@ -13,6 +13,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->withCount(['comments','zans'])->paginate(6);
+        //为了避免页面去执行sql语句,需要采用预加载的技术,
+        //laravel 使用with('user')
+        //或使用load函数
+        $posts->load('user');
         return view('post/index', compact('posts'));
     }
 
